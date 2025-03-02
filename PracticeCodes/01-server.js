@@ -5,7 +5,7 @@ const port=3000;
 const server=createServer((req, res)=>{
   res.statusCode=200;
   res.setHeader('content-Type', 'text/plain');
-  res.end('Hello Node JS!! This is Mikat');
+  res.end('Hello Node JS!! This is first NodeJS Program');
 });
 server.listen(port, hostname, ()=>{
   console.log(`Server running at http://${hostname}:${port}/`);
