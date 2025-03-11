@@ -1,3 +1,14 @@
+/*
+EventEmitter
+
+is a class in Node.js that is part of the events module. It provides a way to handle asynchronous events. 
+Instances of the EventEmitter class can emit named events that cause functions (listeners) to be called. Here's a brief overview of how it works:
+
+Creating an EventEmitter instance: You create an instance of EventEmitter to start using it.
+Registering event listeners: You can register functions to listen for specific events using the on or addListener methods.
+Emitting events: You can emit events using the emit method, which will call all the registered listeners for that event.
+ */
+
 // Step 1: Import the 'events' module (which contains EventEmitter)
 const EventEmitter = require('events');
 

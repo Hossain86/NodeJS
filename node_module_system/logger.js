@@ -1,15 +1,20 @@
-const EventEmitter=require('events');
+// Import the 'events' module to use the EventEmitter class.
+const EventEmitter = require('events');
 
-var url= 'http://mylogger.io/log';
+// Define a variable 'url' with the URL of the logging service.
+var url = 'http://mylogger.io/log';
 
+// Define a class 'Logger' that extends the EventEmitter class.
 class Logger extends EventEmitter {
-  log(message){
-  // Send an HTTP request
-  console.log(message);
+  // Define a method 'log' that takes a 'message' parameter.
+  log(message) {
+    // Log the message to the console.
+    console.log(message);
 
-  this.emit('messageLogged', {id:1, url: "http://"}); //emit means making a noise, produce - signalling that an event has happened
+    // Emit an event named 'messageLogged' with an object containing an id and a URL.
+    this.emit('messageLogged', { id: 1, url: "http://"});
+  }
 }
-}
 
-
-module.exports =log;//we can change exports variables name here
+// Export the Logger class using module.exports.
+module.exports = Logger; // Corrected the export to 'Logger' instead of 'log'.
