@@ -1,5 +1,3 @@
-
-
 const startupDebugger = require('debug')('app:startup');
 const dbDebugger = require('debug')('app:db');
 const morgan = require('morgan');

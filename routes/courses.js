@@ -11,11 +11,9 @@ const courses = [
 router.get('/', (req, res) => {
   res.send(courses);
 });
-// Define a route for POST requests to '' to add a new course.
 router.post('/', (req, res) => {
   const result = validateCourse(req.body);
   const { error } = validateCourse(req.body);
-  // If validation fails, send a 400 status and the error message.
   if (error) {
     res.status(400).send(error.details[0].message);
     return;

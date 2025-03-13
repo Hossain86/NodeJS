@@ -1,12 +1,3 @@
-/*/Web Code/NodeJs/
-│-- node_modules/
-│-- config/
-│   │-- default.json
-│   │-- development.json  (if needed)
-│   │-- custom-environment-variables.json 
-│-- index.js
-│-- package.json
- */
 const config = require('config');
 const helmet = require('helmet'); 
 const morgan = require('morgan');
@@ -43,3 +34,23 @@ app.use(function(req, res, next){
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`You can do It Mikat\nListening on port ${port}...`));
+/*/Web Code/NodeJs/
+│-- node_modules/
+│-- config/
+│   │-- default.json{
+            "name": "My Express Application"
+          }
+│   │-- development.json  {
+              "name": "My Express Application- Development",
+              "mail":{
+                "host": "dev-mail-server"
+              }
+            }
+│   │-- custom-environment-variables.json {
+              "mail":{
+                "password":"APP_PASSWORD"
+              }
+            }
+│-- index.js
+│-- package.json
+ */

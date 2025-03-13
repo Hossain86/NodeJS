@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node JS</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h3 id="introduction-to-node.js">Introduction to Node.js</h3>
+<p>What is Node.js?<br>
+Node.js is an open-source, cross-platform JavaScript runtime environment that allows developers to execute JavaScript code outside of a browser. It is widely used for building scalable and high-performance applications.<br>
+Key Features of Node.js:<br>
+• V8 Engine: Node.js runs on the V8 JavaScript engine (also used in Google Chrome), which makes it fast and efficient.<br>
+• Asynchronous and Event-Driven: Node.js handles I/O operations (network requests, database access, file system operations) asynchronously, meaning it doesn’t block the execution of other code.<br>
+• Single-Threaded, Non-Blocking I/O: Unlike traditional multi-threaded models, Node.js operates on a single thread but can handle multiple requests concurrently.<br>
+• Rich Package Ecosystem: Node.js has a vast collection of open-source modules available via npm (Node Package Manager), making development faster and easier.</p>
+<h3 id="v8-javascript-engine-🏎️">V8 JavaScript Engine 🏎️</h3>
+<p>V8 is the JavaScript engine that makes Chrome and Node.js run JavaScript fast. Let’s break it down:</p>
+<ol>
+<li>What is V8?<br>
+o It is the engine that runs JavaScript code inside Google Chrome.<br>
+o Node.js also uses it to run JavaScript outside the browser.</li>
+<li>What does it do?<br>
+o It parses (reads) and executes JavaScript code.<br>
+o The browser provides extra features like the DOM (Document Object Model) and other Web APIs.</li>
+<li>Other JavaScript Engines:<br>
+o 🦊 SpiderMonkey → Used in Mozilla Firefox<br>
+o 🍏 JavaScriptCore (Nitro) → Used in Safari<br>
+o 🔷 V8 → Used in Chrome &amp; Edge (Edge now uses Chromium)</li>
+</ol>
+<h3 id="how-javascript-runs-in-v8-compilation--performance-🚀">How JavaScript Runs in V8 (Compilation &amp; Performance) 🚀</h3>
+<ol>
+<li>JavaScript was originally “interpreted” (executed line by line).</li>
+<li>Now, V8 compiles JavaScript before running it (this makes it faster).</li>
+<li>JIT (Just-In-Time) Compilation<br>
+o Instead of running directly, JavaScript is first compiled into machine code (fast format for computers).<br>
+o This speeds up execution a lot, which is crucial for big applications like Google Maps.</li>
+</ol>
+<h3 id="npm-node-package-manager-–-your-javascript-toolbox-📦">npm (Node Package Manager) – Your JavaScript Toolbox 📦</h3>
+<p>What is npm?<br>
+• npm = Node.js package manager (used to install and manage code libraries).<br>
+• It has millions of reusable packages for JavaScript developers.<br>
+Installing All Dependencies<br>
+• If a project has a package.json file, run:<br>
+• npm install<br>
+o This installs all required libraries in the node_modules folder.<br>
+Updating Packages<br>
+• npm update<br>
+• Update a specific package:<br>
+• npm update <br>
+Versioning with npm<br>
+• You can install a specific version of a package:<br>
+• npm install @</p>
+<h3 id="understanding-ecmascript-2015-es6-and-beyond-in-node.js">Understanding ECMAScript 2015 (ES6) and Beyond in Node.js</h3>
+<ol>
+<li>What is ECMAScript (ES6)?<br>
+• ES6 (ECMAScript 2015) introduced many modern JavaScript features.<br>
+• Node.js follows the latest updates of this standard by using the V8 engine.<br>
+👉 To check available in-progress features:<br>
+Run this command in your terminal:<br>
+node --v8-options | grep “in progress”</li>
+</ol>
+<h3 id="what-is-a-module-in-node.js">What is a Module in Node.js?</h3>
+<p>A module in Node.js is a reusable block of code that can be imported into other files. It helps in organizing the code and improving maintainability.<br>
+Types of Modules in Node.js:</p>
+<ol>
+<li>Core Modules: Built-in modules provided by Node.js, such as http, fs, path, os.</li>
+<li>Local Modules: Custom modules created by developers within a project.</li>
+<li>Third-Party Modules: Modules installed via npm, like express, mongoose, dotenv.</li>
+</ol>
+<h3 id="the-http-module-in-node.js">The HTTP Module in Node.js</h3>
+<p>The http module in Node.js allows the creation of web servers and handling HTTP requests and responses.<br>
+Creating a Basic Web Server:</p>
+<pre><code>const { createServer } = require('node:http'); // Importing the HTTP module from Node.js
+const hostname = '127.0.0.1'; // Defining the hostname (localhost IP)
+const port = 3000; // Defining the port number where the server will listen
+// Creating an HTTP server
+const server = createServer((req, res) =&gt; {
+res.statusCode = 200; // Setting the HTTP status code to 200 (OK)
+res.setHeader('Content-Type', 'text/plain'); // Setting response header to indicate plain text content
+res.end('Hello World'); // Sending "Hello World" as the response body and ending the response
+});
+// Server starts listening on the specified hostname and port
+server.listen(port, hostname, () =&gt; {
+console.log(`Server running at http://${hostname}:${port}/`); // Logging the server URL to the console
+});
+</code></pre>
+<p>Running the Server:</p>
+<ol>
+<li>Save the file as server.js.</li>
+<li>Run the command:</li>
+<li>node server.js</li>
+<li>Open a browser and visit <a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/</a> to see the output.</li>
+</ol>
+<h3 id="javascript-basics">JavaScript Basics</h3>
+<ol>
+<li>
+<p>Asynchronous programming and callbacks</p>
+</li>
+<li>
+<p>Timers</p>
+</li>
+<li>
+<p>Promises</p>
+</li>
+<li>
+<p>Async and Await</p>
+</li>
+<li>
+<p>Closures</p>
+</li>
+<li>
+<p>The Event Loop<br>
+<em>Asynchronous Programming and Callbacks JavaScript is single-threaded, meaning it executes one operation at a time. However, asynchronous programming allows tasks like I/O operations, network requests, and timers to run in the background without blocking the main thread. This is crucial in Node.js since it handles multiple requests efficiently.</em><br>
+<strong>Callbacks</strong>: A callback is a function passed as an argument to another function and executed later. Callbacks are commonly used in asynchronous operations. Callback functions are a way to ensure certain code runs only after another code has already finished execution.<br>
+Example:</p>
+<p>// Function that takes a name and a callback function as arguments</p>
+<p>function greet(name, callback) {<br>
+console.log('Hello ’ + name); // Print a greeting message<br>
+callback(); // Call the callback function<br>
+}<br>
+// Callback function that logs when the function execution ends<br>
+function logEnd() {<br>
+console.log(‘Function execution ended.’);<br>
+}<br>
+// Calling the greet function with “Alice” and passing ‘logEnd’ as the callback<br>
+greet(‘Alice’, logEnd);<br>
+// Output:<br>
+// Hello Alice<br>
+// Function execution ended.</p>
+</li>
+</ol>
+<p>• processUserData: This function takes two parameters: userId and callback.<br>
+o userId: The ID of the user whose data is to be fetched.<br>
+o callback: A function that will be executed after the data fetching operation completes.<br>
+• setTimeout: Simulates a delay of 1.5 seconds to mimic an asynchronous operation (like fetching data from a server).<br>
+o After 1.5 seconds, it checks if userId is provided.<br>
+o If userId is provided, it calls the callback function with null as the first argument (indicating no error) and a user object { id: userId, name: “John Doe” } as the second argument (indicating success).<br>
+o If userId is not provided, it calls the callback function with an error message “User ID not provided” as the first argument and null as the second argument. 2. Function Call</p>
+<pre><code>// Function that simulates fetching user data from a database or API
+function processUserData(userId, callback) {
+// Simulate a delay of 1.5 seconds before returning data
+setTimeout(() =&gt; {
+if (userId) {
+callback(null, { id: userId, name: "John Doe" }); // If userId exists, return user data (success case)
+} else {
+callback("User ID not provided", null); // If no userId, return an error message
+}
+}, 1500);
+};
+</code></pre>
+<p>• processUserData(1, callback): Calls the processUserData function with 1 as the userId and an anonymous function as the callback.<br>
+o Inside the callback function:<br>
+ It checks if there is an error.<br>
+ If there is an error, it logs the error message to the console.<br>
+ If there is no error, it logs the user data to the console.</p>
+<h3 id="section"></h3>
+<p><strong>Timers</strong> Timers allow executing code after a specified delay or at intervals. JavaScript provides three main timer functions:<br>
+• setTimeout(fn, delay): Executes fn after delay milliseconds.<br>
+• setInterval(fn, delay): Repeats execution of fn every delay milliseconds.<br>
+• clearTimeout and clearInterval: Stop the execution of timers.<br>
+Example:<br>
+setTimeout(() =&gt; console.log(“Executed after 2 seconds”), 2000);<br>
+let interval = setInterval(() =&gt; console.log(“Repeating every 1 second”), 1000);<br>
+setTimeout(() =&gt; clearInterval(interval), 5000); // Stops after 5 seconds</p>
+<h3 id="a-promise-in-javascript">A Promise in JavaScript</h3>
+<p>is an object representing the eventual completion (or failure) of an asynchronous operation and its resulting value. It provides a cleaner, more robust way to handle asynchronous operations compared to traditional callback functions, which can lead to callback hell.<br>
+Key Concepts<br>
+• Pending: The initial state; neither fulfilled nor rejected.<br>
+• Fulfilled: The operation completed successfully.<br>
+• Rejected: The operation failed.<br>
+Creating a Promise</p>
+<pre><code>// Creating a new Promise object
+const myPromise = new Promise((resolve, reject) =&gt; {
+const success = true; // Change this to `false` to simulate failure
+
+if (success) {
+resolve("Operation succeeded!"); // If success is true, resolve the promise
+} else {
+reject("Operation failed."); // If success is false, reject the promise
+}
+});
+</code></pre>
+<p>Handling Promises<br>
+You can handle promises using then and catch methods:<br>
+The then and catch methods are used to handle the outcome of a Promise in JavaScript.</p>
+<blockquote>
+<p><strong>then Method</strong> The then method is used to handle the resolved value of a Promise. It takes up to two arguments:</p>
+<ol>
+<li>A callback function for the onFulfilled case (when the Promise is resolved successfully).</li>
+<li>An optional callback function for the onRejected case (when the Promise is rejected).<br>
+<strong>catch Method</strong>   The catch method is used to handle the rejected value of a Promise. It takes one argument, a callback function for the<br>
+onRejected case.</li>
+</ol>
+</blockquote>
+<pre><code>myPromise
+.then((message) =&gt; {
+console.log("Success:", message); // If the promise is resolved, this runs
+})
+.catch((error) =&gt; {
+console.log("Error:", error); // If the promise is rejected, this runs
+});
+</code></pre>
+<p>Here’s your code with comments on every line for better understanding:</p>
+<pre><code>const fetchData = (url, callback) =&gt; {  
+ // Create a new Promise that handles the fetch request  
+ const myPromise = new Promise((resolve, reject) =&gt; {  
+ fetch(url) // Fetch data from the given URL  
+ .then((response) =&gt; {  
+ if (response.ok) { // Check if the response is successful (status 200-299)  
+ return response.json(); // Convert response to JSON  
+ } else {  
+ reject("Failed to fetch data: " + response.statusText); // Reject if response is not OK  
+ }  
+ })  
+ .then((data) =&gt; {  
+ resolve(data); // Resolve the promise with fetched data  
+ })  
+ .catch((error) =&gt; {  
+ reject("Network error: " + error.message); // Reject if there is a network error  
+ });  
+ });  
+ // Use the promise to trigger the callback  
+ myPromise  
+ .then((data) =&gt; {  
+ callback(null, data); // No error, pass the fetched data to the callback  
+ })  
+ .catch((error) =&gt; {  
+ callback(error, null); // Pass the error to the callback function  
+ });  
+};  
+// Example usage  
+const url = "https://jsonplaceholder.typicode.com/posts";  
+fetchData(url, (error, data) =&gt; {  
+ if (error) {  
+ console.error("Error:", error); // Log error if fetching fails  
+ } else {  
+ console.log("Fetched data:", data); // Log the fetched data if successful  
+ }  
+});
+</code></pre>
+<p>Why is using a <code>Promise</code> better than not using it?<br>
+If we didn’t use Promises and only relied on callback-based approaches, we would face multiple issues:</p>
+<ol>
+<li>Avoiding Callback Hell (Better Readability &amp; Maintainability)
+<ul>
+<li>If we had multiple nested callbacks, the code would become difficult to read and maintain.</li>
+<li>With Promises, we can chain <code>.then()</code> and <code>.catch()</code>, making it cleaner.</li>
+</ul>
+</li>
+<li>Error Handling is Easier
+<ul>
+<li>Without Promises, error handling inside multiple nested callbacks would be messy.</li>
+<li>With Promises, we can use <code>.catch()</code> to handle errors in one place.</li>
+</ul>
+</li>
+<li>Better Control Over Asynchronous Operations
+<ul>
+<li>Promises allow us to <code>resolve()</code> or <code>reject()</code> based on conditions.</li>
+<li>With callbacks, we must rely on manually managing success/failure states.</li>
+</ul>
+</li>
+<li>Avoiding “Callback Inversion”
+<ul>
+<li>When using callbacks, functions pass execution to another function, making it harder to track flow.</li>
+<li>Promises provide a more structured and predictable execution flow.</li>
+</ul>
+</li>
+<li>Improved Debugging
+<ul>
+<li>Promises work well with modern debugging tools and async/await, allowing better stack traces.</li>
+<li>Callbacks often make debugging harder, especially when deeply nested.<br>
+Alternative: Using <code>async/await</code> (Even Cleaner)<br>
+If you want an even cleaner approach, you can use <code>async/await</code>:<br>
+const fetchDataAsync = async (url) =&gt; {<br>
+try {<br>
+const response = await fetch(url);<br>
+if (!response.ok) {<br>
+throw new Error("Failed to fetch data: " + response.statusText);<br>
+}<br>
+const data = await response.json();<br>
+console.log(“Fetched data:”, data);<br>
+} catch (error) {<br>
+console.error(“Error:”, error.message);<br>
+}<br>
+};<br>
+// Example usage<br>
+fetchDataAsync(url);</li>
+</ul>
+</li>
+</ol>
+<p>👉 This removes explicit Promises and callbacks, making it even more readable!<br>
+Using Async/Await<br>
+Async/await syntax provides an even cleaner way to work with promises:<br>
+Asynchronous in JavaScript<br>
+In JavaScript, asynchronous operations don’t block the execution of other code. This is achieved using constructs like callbacks, Promises, and the async/await syntax.<br>
+async Keyword<br>
+The async keyword is used to declare an asynchronous function. This function returns a Promise implicitly, and you can use the await keyword within it.<br>
+await Keyword<br>
+The await keyword can only be used inside an async function. It pauses the execution of the async function until the Promise is resolved or rejected.<br>
+Handling Errors<br>
+When using async and await, it’s important to handle errors using try and catch blocks. If the awaited Promise is rejected, the code in the catch block will execute.</p>
+<p>async function handleOperations() {<br>
+try {<br>
+const result1 = await asyncOperation1;<br>
+console.log(result1);<br>
+const result2 = await asyncOperation2;<br>
+console.log(result2);<br>
+} catch (error) {<br>
+console.error(error);<br>
+}<br>
+}<br>
+handleOperations();<br>
+In this example, async keyword is used to define an asynchronous function, and await pauses the function execution until the promise settles.<br>
+Summary<br>
+• Promises simplify asynchronous code, making it more readable and manageable.<br>
+• Then and catch methods handle success and error cases.<br>
+• Chaining allows for sequential asynchronous operations.<br>
+• Async/await provides a syntactically cleaner approach for dealing with promises.</p>
+<h3 id="section-1"></h3>
+<p>Async and Await async and await make asynchronous code look synchronous and are used with Promises.<br>
+Example:<br>
+// Function that returns a Promise simulating data fetching<br>
+function fetchData() {<br>
+return new Promise((resolve, reject) =&gt; {<br>
+setTimeout(() =&gt; {<br>
+resolve(“Data fetched successfully!”); // After 2 seconds, resolve the promise<br>
+}, 2000);<br>
+});<br>
+}<br>
+// Async function to handle the asynchronous fetchData function<br>
+async function getData() {<br>
+console.log(“Fetching data…”); // Log before fetching starts</p>
+<p>try {<br>
+const data = await fetchData(); // Wait for fetchData() to complete<br>
+console.log(data); // Print the resolved data<br>
+} catch (error) {<br>
+console.error(“Error:”, error); // Catch and log any errors<br>
+}</p>
+<p>console.log(“Done fetching data.”); // Log after fetching is completed<br>
+}<br>
+// Call the async function<br>
+getData();<br>
+Breakdown of the Example</p>
+<ol>
+<li>fetchData Function:<br>
+o Returns a Promise that resolves with the message “Data fetched successfully!” after a 2-second delay.</li>
+<li>getData Function:<br>
+o Declared as an async function.<br>
+o Logs “Fetching data…” to the console.<br>
+o Uses await to wait for fetchData to resolve and assigns the resolved value to the data variable.<br>
+o Logs the data to the console.<br>
+o Logs “Done fetching data.” to the console after the asynchronous operation is complete.</li>
+</ol>
+<h3 id="section-2"></h3>
+<p>Closures<br>
+A closure is a function that remembers the environment in which it was created. It allows a function to access variables from its outer (enclosing) scope even after that outer function has finished executing.<br>
+Here’s an example to illustrate the concept:<br>
+function outerFunction() {<br>
+const outerVariable = ‘I am from the outer scope’;<br>
+function innerFunction() {<br>
+console.log(outerVariable); // Accesses outerVariable even after outerFunction is done<br>
+}<br>
+return innerFunction;<br>
+}<br>
+const myClosure = outerFunction();<br>
+myClosure(); // Logs: ‘I am from the outer scope’<br>
+Explanation:<br>
+• outerFunction creates a local variable outerVariable and defines innerFunction.<br>
+• innerFunction has access to outerVariable even after outerFunction has returned.<br>
+• myClosure holds the innerFunction, which still has access to outerVariable due to closure.</p>
+<h3 id="section-3"></h3>
+<p>The Event Loop The Event Loop handles JavaScript’s asynchronous operations, ensuring that non-blocking code is executed efficiently. It processes the Call Stack, Web APIs, Callback Queue, and Microtask Queue (Promises) in a cyclic manner.<br>
+Example:<br>
+console.log(“Start”);<br>
+setTimeout(() =&gt; console.log(“Timeout callback”), 0);<br>
+Promise.resolve().then(() =&gt; console.log(“Promise resolved”));<br>
+console.log(“End”);<br>
+Output:<br>
+Start<br>
+End<br>
+Promise resolved<br>
+Timeout callback<br>
+Promises are executed before setTimeout because they are in the Microtask Queue, which has higher priority than the Callback Queue.</p>
+<h3 id="section-4"></h3>
+<p>1️⃣ What is Undici?<br>
+🔹 Undici is an HTTP client library for Node.js that powers the fetch API.<br>
+🔹 It is built from scratch and does not use Node.js’s built-in HTTP module.<br>
+🔹 It is high-performance and good for handling many requests efficiently.</p>
+<h3 id="section-5"></h3>
+<p>2️⃣ Basic Usage of Fetch API with Undici<br>
+📌 GET Request (Fetching Data)<br>
+Here’s how you can make a GET request to fetch data in Node.js using the node-fetch library.<br>
+// Import the node-fetch library<br>
+const fetch = require(‘node-fetch’);<br>
+// URL of the API you want to fetch data from<br>
+const apiURL = ‘<a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a>’;<br>
+// Function to fetch data<br>
+async function fetchData() {<br>
+try {<br>
+const response = await fetch(apiURL);<br>
+if (!response.ok) {<br>
+throw new Error('Network response was not ok ’ + response.statusText);<br>
+}<br>
+const data = await response.json();<br>
+displayData(data);<br>
+} catch (error) {<br>
+console.error(‘There was a problem with the fetch operation:’, error);<br>
+}<br>
+}<br>
+// Function to display data<br>
+function displayData(data) {<br>
+data.forEach(item =&gt; {<br>
+console.log(<code>ID: ${item.id}, Title: ${item.title}</code>);<br>
+});<br>
+}<br>
+// Call fetchData<br>
+fetchData();<br>
+Explanation<br>
+• API URL: Replace ‘<a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a>’ with the URL of the API you want to fetch data from.<br>
+• Import node-fetch: This line imports the node-fetch library, which allows you to use the fetch function in Node.js.<br>
+• fetchData Function: Uses fetch to make a GET request to the API.<br>
+o await fetch(apiURL): Waits for the response from the API.<br>
+o Checks if the response is OK. If not, throws an error.<br>
+o await response.json(): Parses the response as JSON.<br>
+• displayData Function: Logs the fetched data to the console.<br>
+o Iterates over the data and logs each item’s ID and title.<br>
+📌 POST Request (Sending Data)<br>
+// Import the node-fetch library<br>
+const fetch = require(‘node-fetch’);<br>
+// URL of the API you want to post data to<br>
+const apiURL = ‘<a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a>’;<br>
+// Data to be sent in the POST request<br>
+const data = {<br>
+title: ‘foo’,<br>
+body: ‘bar’,<br>
+userId: 1<br>
+};<br>
+// Function to make a POST request<br>
+async function postData() {<br>
+try {<br>
+const response = await fetch(apiURL, {<br>
+method: ‘POST’,<br>
+headers: {<br>
+‘Content-Type’: ‘application/json’<br>
+},<br>
+body: JSON.stringify(data)<br>
+});<br>
+if (!response.ok) {<br>
+throw new Error('Network response was not ok ’ + response.statusText);<br>
+}<br>
+const responseData = await response.json();<br>
+console.log(‘Response:’, responseData);<br>
+} catch (error) {<br>
+console.error(‘There was a problem with the fetch operation:’, error);<br>
+}<br>
+}<br>
+// Call postData<br>
+postData();<br>
+Explanation<br>
+• API URL: Replace ‘<a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a>’ with the URL of the API you want to post data to.<br>
+• Data: This is the data you want to send in the POST request. It is converted to a JSON string using JSON.stringify(data).<br>
+• postData Function: Uses fetch to make a POST request to the API.<br>
+o method: ‘POST’: Specifies that this is a POST request.<br>
+o headers: Sets the Content-Type to application/json to indicate that the request body contains JSON data.<br>
+o body: Contains the data to be sent, converted to a JSON string.<br>
+o await fetch(apiURL, { method, headers, body }): Sends the request and waits for the response.<br>
+o Checks if the response is OK. If not, throws an error.<br>
+o await response.json(): Parses the response as JSON and logs it to the console.</p>
+<h3 id="section-6"></h3>
+<p>📦 Node.js Module System</p>
+<h3 id="section-7"></h3>
+<p>Node.js follows a module system to organize code into separate files. This helps make the code reusable, maintainable, and easy to manage.<br>
+1️⃣ Global Object<br>
+• In Node.js, the global object is an object that is accessible from anywhere in your application.<br>
+• It provides built-in functions and variables.<br>
+• Unlike in browsers (where the global object is window), in Node.js, the global object is global.</p>
+<ul>
+<li>Example:<br>
+console.log(global); // Prints all global properties<br>
+console.log(global.setTimeout); // Shows that setTimeout is a global function</li>
+</ul>
+<h3 id="section-8"></h3>
+<p>2️⃣ Modules<br>
+• A module is just a JavaScript file that contains some code.<br>
+• Node.js organizes code into different files (modules) to keep things clean.<br>
+• There are three types of modules:</p>
+<ol>
+<li>Built-in modules (provided by Node.js, like fs, http, path)</li>
+<li>User-defined modules (files you create)</li>
+<li>Third-party modules (installed via npm, like express)</li>
+</ol>
+<h3 id="section-9"></h3>
+<p>3️⃣ Creating a Module<br>
+• To create a module, you write some code inside a separate file and export it using module.exports.<br>
+📄 math.js<br>
+function add(a, b) {<br>
+return a + b;<br>
+}<br>
+module.exports = add; // Exporting function</p>
+<h3 id="section-10"></h3>
+<p>4️⃣ Loading a Module<br>
+• To use a module in another file, we import it using require().<br>
+📄 app.js<br>
+const add = require(’./math’); // Importing math.js<br>
+console.log(add(5, 3)); // Output: 8</p>
+<h3 id="section-11"></h3>
+<p>5️⃣ Module Wrapper Function<br>
+• Every module in Node.js is wrapped inside a function before execution.<br>
+• This function provides the following arguments:<br>
+o exports → Shortcut for exporting<br>
+o require → Function to import modules<br>
+o module → Object representing the current module<br>
+o **filename → Path of the current file<br>
+o **dirname → Directory of the current file</p>
+<ul>
+<li>Example:<br>
+console.log(**filename); // Prints the full path of this file<br>
+console.log(**dirname); // Prints the directory where this file is located</li>
+</ul>
+<h3 id="section-12"></h3>
+<p>6️⃣ Path Module<br>
+• Joining Paths: Combines multiple path segments into one.<br>
+• Resolving Paths: Converts a sequence of paths into an absolute path.<br>
+• Extracting Parts: Retrieves information like directory name, base name, extension, etc.<br>
+• Normalization: Normalizes a path, resolving … and . segments.<br>
+// Import the path module from Node.js<br>
+const path = require(‘path’);<br>
+// Join multiple path segments into a single path<br>
+const fullPath = path.join(’/users’, ‘md’, ‘projects’);<br>
+// Log the full joined path<br>
+console.log(‘Full Path:’, fullPath);<br>
+// Resolve a sequence of paths into an absolute path<br>
+const absolutePath = path.resolve(‘users’, ‘md’, ‘projects’);<br>
+// Log the absolute path<br>
+console.log(‘Absolute Path:’, absolutePath);<br>
+// Get the last portion (file name) of a path<br>
+const fileName = path.basename(’/users/md/projects/index.html’);<br>
+// Log the file name<br>
+console.log(‘File Name:’, fileName);<br>
+// Get the directory name of a path<br>
+const dirName = path.dirname(’/users/md/projects/index.html’);<br>
+// Log the directory name<br>
+console.log(‘Directory Name:’, dirName);<br>
+// Get the extension of the path<br>
+const extName = path.extname(’/users/md/projects/index.html’);<br>
+// Log the extension name<br>
+console.log(‘Extension Name:’, extName);###<br>
+7️⃣ OS Module<br>
+• The os module is a built-in module that provides system-related information.</p>
+<ul>
+<li>Example:<br>
+const os = require(‘os’);<br>
+console.log(os.type()); // OS type (Windows/Linux/Mac)<br>
+console.log(os.freemem()); // Free memory in bytes<br>
+console.log(os.totalmem()); // Total memory in bytes<br>
+console.log(os.platform()); // OS platform (win32, linux, darwin)</li>
+</ul>
+<h3 id="section-13"></h3>
+<p>📦 Node.js Module System<br>
+Node.js provides built-in modules that help developers perform different tasks easily, such as working with files, handling events, and creating servers.</p>
+<h3 id="section-14"></h3>
+<p>1️⃣ File System (FS) Module<br>
+• The fs (File System) module is used to interact with files and directories.<br>
+• It allows you to:<br>
+o Read files<br>
+o Write files<br>
+o Delete files<br>
+o Rename files<br>
+o Create directories, etc.</p>
+<ul>
+<li>Example: Reading a File<br>
+📄 app.js<br>
+const fs = require(‘fs’);<br>
+// Read file asynchronously<br>
+fs.readFile(‘example.txt’, ‘utf8’, (err, data) =&gt; {<br>
+if (err) {<br>
+console.error(err);<br>
+return;<br>
+}<br>
+console.log(data); // Prints the content of example.txt<br>
+});</li>
+<li>Example: Writing to a File<br>
+fs.writeFile(‘output.txt’, ‘Hello, Node.js!’, (err) =&gt; {<br>
+if (err) throw err;<br>
+console.log(‘File written successfully!’);<br>
+});</li>
+</ul>
+<h3 id="section-15"></h3>
+<p>2️⃣ Events Module<br>
+In Node.js, the events module is at the heart of handling and working with events. It allows you to create, fire, and listen to events in an asynchronous and event-driven manner.<br>
+What is an Event in Node.js??<br>
+An event is essentially a signal that something has happened in the application. For example:<br>
+• A user clicks a button (in a UI application).<br>
+• A file finishes downloading.<br>
+• A server receives a request.<br>
+In Node.js, events help to implement the non-blocking, asynchronous nature of its runtime. When an event occurs, associated listeners (or callbacks) respond to them.<br>
+The Event Module<br>
+The events module in Node.js provides the EventEmitter class, which allows you to create and manage custom events. The most common pattern is:</p>
+<ol>
+<li>Emit an Event: You “trigger” an event to signal that something happened.</li>
+<li>Listen to an Event: You “register” a listener that runs when the event is triggered.<br>
+How Events and Listening Work<br>
+Here’s an example to illustrate:<br>
+javascript<br>
+// Import the events module<br>
+const EventEmitter = require(‘events’);<br>
+// Create an instance of EventEmitter<br>
+const myEmitter = new EventEmitter();<br>
+// Create a listener for the ‘greet’ event<br>
+myEmitter.on(‘greet’, (name) =&gt; {<br>
+console.log(<code>Hello, ${name}!</code>);<br>
+});<br>
+// Emit the ‘greet’ event<br>
+myEmitter.emit(‘greet’, ‘MD’);<br>
+What’s Happening Here:</li>
+<li>Event Emitter Creation: The myEmitter instance is created from the EventEmitter class.</li>
+<li>Registering a Listener: The .on() method listens for a specific event (‘greet’ in this case). When the event is triggered, the callback function runs.</li>
+<li>Emitting the Event: The .emit() method triggers the event, optionally passing along arguments (‘MD’ here, passed into the listener’s function).<br>
+Key Methods and Properties<br>
+• on(event, listener): Registers a listener for the specified event.<br>
+• emit(event, …args): Triggers an event, optionally passing arguments to the listener.<br>
+• once(event, listener): Registers a one-time listener that is removed after the event is triggered.<br>
+• removeListener(event, listener): Removes a specific listener for an event.<br>
+• removeAllListeners(event): Removes all listeners for a specific event.<br>
+This pattern makes Node.js powerful in building scalable and event-driven applications, such as servers, real-time systems, or asynchronous workflows.</li>
+</ol>
+<h3 id="section-16"></h3>
+<p>3️⃣ Event Arguments<br>
+• We can pass data (arguments) while emitting an event.<br>
+• This helps send information along with an event.</p>
+<ul>
+<li>Example: Passing Arguments in Events<br>
+emitter.on(‘userLoggedIn’, (username) =&gt; {<br>
+console.log(<code>User ${username} has logged in.</code>);<br>
+});<br>
+emitter.emit(‘userLoggedIn’, ‘Luffy’);<br>
+// Output: User Luffy has logged in.</li>
+</ul>
+<h3 id="section-17"></h3>
+<p>4️⃣ Extending EventEmitter<br>
+• Instead of using EventEmitter directly, we can create our own custom class that extends it.<br>
+• This is useful when we need custom event-handling logic inside a class.</p>
+<ul>
+<li>Example: Creating a Custom EventEmitter Class<br>
+const EventEmitter = require(‘events’);<br>
+class Logger extends EventEmitter {<br>
+log(message) {<br>
+console.log(message);<br>
+this.emit(‘messageLogged’, { id: 1, text: message });<br>
+}<br>
+}<br>
+const logger = new Logger();<br>
+logger.on(‘messageLogged’, (eventData) =&gt; {<br>
+console.log(‘Listener received:’, eventData);<br>
+});<br>
+logger.log(‘Hello, World!’);<br>
+Explanation:</li>
+</ul>
+<ol>
+<li>We create a class Logger that extends EventEmitter.</li>
+<li>The log() method prints a message and emits an event.</li>
+<li>When the event is emitted, a listener handles it.</li>
+</ol>
+<h3 id="section-18"></h3>
+<p>5️⃣ HTTP Module<br>
+• The http module helps create web servers and handle requests.<br>
+• It is used to build backend applications in Node.js.</p>
+<ul>
+<li>Example: Creating a Simple Web Server<br>
+const http = require(‘http’);<br>
+const server = http.createServer((req, res) =&gt; {<br>
+res.writeHead(200, { ‘Content-Type’: ‘text/plain’ });<br>
+res.end(‘Hello, this is a Node.js server!’);<br>
+});<br>
+server.listen(3000, () =&gt; {<br>
+console.log(‘Server is running on port 3000…’);<br>
+});<br>
+Explanation:</li>
+</ul>
+<ol>
+<li>We import the http module.</li>
+<li>We create a server that sends “Hello, this is a Node.js server!” as a response.</li>
+<li>The server listens on port 3000.</li>
+</ol>
+<h3 id="section-19"></h3>
+<p>Code With Mosh:<br>
+Explanation<br>
+Here’s a fully commented version of your code along with a detailed explanation of every function, object, and event mechanism used.</p>
+<h3 id="section-20"></h3>
+<p>Explanation of Key Concepts</p>
+<ol>
+<li>EventEmitter<br>
+• What it does: EventEmitter is a built-in module in Node.js that allows objects to communicate asynchronously through event-driven programming.<br>
+• How it works:<br>
+o It emits (triggers) named events.<br>
+o It listens (reacts) to those events when they occur.</li>
+<li>emit Method<br>
+• What it does: Triggers an event.<br>
+• Example from your code:<br>
+js</li>
+</ol>
+<p>emitter.emit(‘messageLogged’, { id: 1, url: “http://” });<br>
+o Here, emit sends a signal that the messageLogged event has occurred with an object { id: 1, url: “http://” } as data. 3. on Method (Listener)<br>
+• What it does: Listens for an event and executes a function when the event is emitted.<br>
+• Example from your code:<br>
+js</p>
+<p>logger.on(‘messageLogged’, (arg) =&gt; {<br>
+console.log(‘Listener called’, arg);<br>
+});<br>
+o This listens for the messageLogged event and executes a function when the event occurs.</p>
+<h3 id="section-21"></h3>
+<p>Fully Commented Code<br>
+app.js (Main file)<br>
+javascript</p>
+<p>// Import the built-in EventEmitter module from Node.js<br>
+const EventEmitter = require(‘events’);<br>
+// Import the Logger class from logger.js<br>
+const Logger = require(’./logger’);<br>
+// Create an instance of the Logger class<br>
+const logger = new Logger();<br>
+// Register a listener for the ‘messageLogged’ event<br>
+// The callback function gets executed when the event is emitted<br>
+logger.on(‘messageLogged’, (arg) =&gt; {<br>
+console.log(‘Listener called’, arg); // Logs the event data when triggered<br>
+});<br>
+// Call the log function, which will internally emit ‘messageLogged’ event<br>
+logger.log(‘message’);</p>
+<h3 id="section-22"></h3>
+<p>logger.js (Module File)<br>
+javascript</p>
+<p>// Import the built-in EventEmitter module to handle events<br>
+const EventEmitter = require(‘events’);<br>
+// Define a URL (not used, but can be useful for logging requests)<br>
+var url = ‘<a href="http://mylogger.io/log">http://mylogger.io/log</a>’;<br>
+// Define a Logger class that extends EventEmitter<br>
+class Logger extends EventEmitter {<br>
+// Define a method ‘log’ that takes a message as an argument<br>
+log(message) {<br>
+// Print the message to the console<br>
+console.log(message);</p>
+<pre><code>// Emit an event named 'messageLogged' with an object as data
+// The event listener in app.js will receive this data
+this.emit('messageLogged', { id: 1, url: "http://" });
+</code></pre>
+<p>}<br>
+}<br>
+// Export the Logger class so it can be used in other files<br>
+module.exports = Logger; // The correct export (previously, it was ‘log’ which was incorrect)</p>
+<h3 id="section-23"></h3>
+<p>Detailed Explanation of Objects, Functions, and Event Mechanism<br>
+Term Explanation<br>
+EventEmitter A built-in class in Node.js that enables event-driven programming. Objects can emit and listen for events.<br>
+emit(eventName, data) Triggers an event with an optional data object. In this case, it emits ‘messageLogged’ with { id: 1, url: “http://” }.<br>
+on(eventName, callback) Listens for a specific event and executes a callback when the event occurs. The callback receives event data.<br>
+Logger (class) A class that extends EventEmitter to allow logging messages and emitting events.<br>
+log(message) A method inside Logger that logs a message and emits the ‘messageLogged’ event.<br>
+{ id: 1, url: “http://” } The data object passed when the event is emitted. It can be any structured data.</p>
+<h3 id="section-24"></h3>
+<p>Flow of Execution</p>
+<ol>
+<li>logger.js defines a class Logger that extends EventEmitter.</li>
+<li>The log(message) function prints a message and emits the messageLogged event.</li>
+<li>app.js creates an instance of Logger.</li>
+<li>It registers a listener for messageLogged, which logs the received event data.</li>
+<li>Calling logger.log(‘message’) prints ‘message’ and triggers the event.</li>
+<li>The event listener logs ‘Listener called’ along with the event data.<br>
+PDF, DOCX, PPT, TEXT file read using library in node<br>
+PDF File Parsing<br>
+Package Installation Command:<br>
+bash<br>
+npm install pdf-parse<br>
+Example Code:<br>
+javascript<br>
+// Import the built-in ‘fs’ (file system) module<br>
+const fs = require(‘fs’);<br>
+// Import the ‘pdf-parse’ library for parsing PDF files<br>
+const pdf = require(‘pdf-parse’);<br>
+// Specify the path to the PDF file<br>
+const filePath = ‘…/Introduction to Node Note-01.pdf’;<br>
+// Read the PDF file as a buffer<br>
+fs.readFile(filePath, (err, data) =&gt; {<br>
+// Handle any errors that occur while reading the file<br>
+if (err) throw err;<br>
+// Parse the PDF data<br>
+pdf(data).then(pdfData =&gt; {<br>
+// Log the text content of the PDF to the console<br>
+console.log(pdfData.text);<br>
+}).catch(error =&gt; {<br>
+// Handle any errors that occur while parsing the PDF<br>
+console.error(“Error reading file”, error);<br>
+});<br>
+});<br>
+Parsing Different Types of Files in Node.js</li>
+<li>PDF Files<br>
+• Library: pdf-parse<br>
+• Usage: Extracts text content from PDF files.<br>
+• Example: The code snippet above demonstrates how to read and parse a PDF file.</li>
+<li>DOCX Files<br>
+• Package Installation Command:<br>
+bash<br>
+npm install mammoth<br>
+• Example Code:<br>
+javascript<br>
+// Import the built-in ‘fs’ (file system) module<br>
+const fs = require(‘fs’);<br>
+// Import the ‘mammoth’ library for parsing DOCX files<br>
+const mammoth = require(‘mammoth’);<br>
+// Specify the path to the DOCX file<br>
+const filePath = ‘example.docx’;<br>
+// Read the DOCX file as a buffer<br>
+fs.readFile(filePath, (err, data) =&gt; {<br>
+// Handle any errors that occur while reading the file<br>
+if (err) throw err;<br>
+// Parse the DOCX data to extract raw text<br>
+mammoth.extractRawText({ buffer: data })<br>
+.then(result =&gt; {<br>
+// Log the text content of the DOCX to the console<br>
+console.log(result.value);<br>
+})<br>
+.catch(error =&gt; {<br>
+// Handle any errors that occur while parsing the DOCX<br>
+console.error(“Error reading file”, error);<br>
+});<br>
+});</li>
+<li>PPT Files<br>
+• Package Installation Command:<br>
+bash<br>
+npm install pptx2json<br>
+• Example Code:<br>
+javascript<br>
+// Import the built-in ‘fs’ (file system) module<br>
+const fs = require(‘fs’);<br>
+// Import the ‘pptx2json’ library for parsing PPTX files<br>
+const pptx2json = require(‘pptx2json’);<br>
+// Specify the path to the PPTX file<br>
+const filePath = ‘example.pptx’;<br>
+// Parse the PPTX data to extract content<br>
+pptx2json(filePath).then(result =&gt; {<br>
+// Log the parsed data from the PPTX file to the console<br>
+console.log(result);<br>
+}).catch(error =&gt; {<br>
+// Handle any errors that occur while parsing the PPTX<br>
+console.error(“Error reading file”, error);<br>
+});</li>
+<li>Text Files<br>
+• Library: Built-in fs module (no need to install)<br>
+• Usage: Reads plain text files.<br>
+• Example Code:<br>
+javascript<br>
+// Import the built-in ‘fs’ (file system) module<br>
+const fs = require(‘fs’);<br>
+// Specify the path to the text file<br>
+const filePath = ‘example.txt’;<br>
+// Read the text file with UTF-8 encoding<br>
+fs.readFile(filePath, ‘utf8’, (err, data) =&gt; {<br>
+// Handle any errors that occur while reading the file<br>
+if (err) throw err;</li>
+</ol>
+<p>getRequest.js:<br>
+// Import the ‘express’ module.<br>
+const express = require(‘express’);<br>
+// Create an instance of an Express application.<br>
+const app = express();</p>
+<p>// Define an array of course objects.<br>
+const courses = [<br>
+{id: 1, name: ‘course1’},<br>
+{id: 2, name: ‘course2’},<br>
+{id: 3, name: ‘course3’}<br>
+];</p>
+<p>// Define a route for the root URL (’/’) that sends ‘Hello World’ as the response.<br>
+app.get(’/’, (req, res) =&gt; {<br>
+res.send(‘Hello World’);<br>
+});</p>
+<p>// Define a route for ‘/api/courses’ that sends the list of courses as the response.<br>
+app.get(’/api/courses’, (req, res) =&gt; {<br>
+res.send(courses);<br>
+});</p>
+<p>// Define a route for ‘/api/courses/:id’ that sends the course with the given ID as the response.<br>
+app.get(’/api/courses/:id’, (req, res) =&gt; {<br>
+// Find the course with the given ID.<br>
+const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>));<br>
+// If the course is not found, send a 404 status and an error message.<br>
+if (!course) res.status(404).send(‘The course with the given ID was not found.’);<br>
+// Send the course as the response.<br>
+res.send(course);<br>
+});</p>
+<p>// Define a route for ‘/api/posts/:year/:month’ that sends the request parameters as the response.<br>
+app.get(’/api/posts/:year/:month’, (req, res) =&gt; {<br>
+res.send(req.params);<br>
+});</p>
+<p>// Define the port to listen on, using the environment variable PORT or defaulting to 3000.<br>
+const port = process.env.PORT || 3000;<br>
+// Start the server and listen on the defined port, logging a message to the console.<br>
+app.listen(port, () =&gt; console.log(<code>Listening on port ${port}...</code>));</p>
+<p>/*<br>
+This code sets up a basic Express server with the following routes:</p>
+<ul>
+<li>GET ‘/’ which responds with ‘Hello World’.</li>
+<li>GET ‘/api/courses’ which responds with a list of courses.</li>
+<li>GET ‘/api/courses/:id’ which responds with a specific course based on the provided ID.</li>
+<li>GET ‘/api/posts/:year/:month’ which responds with the request parameters (year and month).<br>
+The server listens on a port defined by the environment variable PORT or defaults to port 3000.<br>
+*/<br>
+Crud Operation<br>
+// Import the Joi module for data validation.<br>
+const Joi = require(‘joi’);<br>
+// Import the ‘express’ module.<br>
+const express = require(‘express’);<br>
+// Create an instance of an Express application.<br>
+const app = express();<br>
+// Use the express.json() middleware to parse JSON bodies.<br>
+app.use(express.json());<br>
+// Define an array of course objects.<br>
+const courses = [<br>
+{id: 1, name: ‘course1’},<br>
+{id: 2, name: ‘course2’},<br>
+{id: 3, name: ‘course3’}<br>
+];<br>
+// Define a route for ‘/api/courses’ that sends the list of courses as the response.<br>
+app.get(’/api/courses’, (req, res) =&gt; {<br>
+res.send(courses);<br>
+});<br>
+// Define a route for POST requests to ‘/api/courses’ to add a new course.<br>
+app.post(’/api/courses’, (req, res) =&gt; {<br>
+const { error } = validateCourse(req.body);<br>
+if (error) return res.status(400).send(error.details[0].message);<br>
+const course = { id: courses.length + 1, name: <a href="http://req.body.name">req.body.name</a> };<br>
+courses.push(course);<br>
+res.send(course);<br>
+});<br>
+app.put(’/api/courses/:id’, (req, res) =&gt; {<br>
+const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>));<br>
+if (!course) return res.status(404).send(‘Course not found.’);<br>
+const { error } = validateCourse(req.body);<br>
+if (error) return res.status(400).send(error.details[0].message);<br>
+<a href="http://course.name">course.name</a> = <a href="http://req.body.name">req.body.name</a>;<br>
+res.send(course);<br>
+});<br>
+app.delete(’/api/courses/:id’, (req, res) =&gt; {<br>
+const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>));<br>
+if (!course) return res.status(404).send(‘Course not found.’);<br>
+const index = courses.indexOf(course);<br>
+courses.splice(index, 1);<br>
+res.send(course);<br>
+});<br>
+function validateCourse(course) {<br>
+const schema = Joi.object({ name: Joi.string().min(3).required() });<br>
+return schema.validate(course);<br>
+}<br>
+const port = process.env.PORT || 3000;<br>
+// Start the server and listen on the defined port, logging a message to the console.<br>
+app.listen(port, () =&gt; console.log(<code>Listening on port ${port}...</code>));</li>
+</ul>
+<p>🔹<br>
+How the Code Works<br>
+1️⃣ Setting Up the Server<br>
+• Express.js is imported to create the server.<br>
+• Joi is imported for request validation.<br>
+• app.use(express.json()) enables JSON parsing for incoming requests.<br>
+• The server listens on port 3000 (or an environment-defined port).<br>
+2️⃣ Data Storage<br>
+• A simple array courses acts as a database to store course objects, each having an id and name.<br>
+3️⃣ Routes and Their Functions<br>
+GET /api/courses – Fetch All Courses<br>
+• Responds with the full list of courses.<br>
+POST /api/courses – Add a New Course<br>
+• Validates the request body using validateCourse().<br>
+• If invalid, returns a 400 Bad Request error.<br>
+• If valid, adds the new course with a unique id and responds with the created course.<br>
+PUT /api/courses/:id – Update a Course<br>
+• Finds the course by ID.<br>
+• If not found, returns 404 Not Found.<br>
+• Validates the request body.<br>
+• Updates the course name and returns the updated course.<br>
+DELETE /api/course/:id (Bug 🐛 here!) – Delete a Course<br>
+• Bug: The route path should be /api/courses/:id (not /api/course/:id).<br>
+• Bug: const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>))[0]; should be const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>));<br>
+• If the course is found, removes it from the array and responds with the deleted course.<br>
+Validation Function: validateCourse(course)<br>
+• Uses Joi to ensure:<br>
+o name is a string.<br>
+o Minimum 3 characters.<br>
+o Required.</p>
+<h3 id="section-25"></h3>
+<p>🔥 Common Issues in the Code<br>
+1️⃣ Validation Function in DELETE Request is Unnecessary<br>
+• The validateCourse(req.body) in DELETE doesn’t make sense because DELETE requests don’t usually have a body.<br>
+2️⃣ Incorrect Delete Route Path<br>
+• Your DELETE route should be /api/courses/:id, not /api/course/:id.<br>
+3️⃣ Incorrect Course Finding in DELETE</p>
+<p>const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>))[0];<br>
+❌ Wrong because find() returns an object, not an array.<br>
+✔️ Correct:<br>
+const course = courses.find(c =&gt; <a href="http://c.id">c.id</a> === parseInt(<a href="http://req.params.id">req.params.id</a>));</p>
+<h3 id="section-26"></h3>
+<p>🚀 How the Server Works</p>
+<ol>
+<li>The server starts and listens on port 3000.</li>
+<li>When a request is made to an endpoint (/api/courses etc.), it checks the HTTP method (GET, POST, PUT, DELETE).</li>
+<li>Express handles the request and runs the corresponding function.</li>
+<li>The response is sent back to the client.</li>
+</ol>
+<h3 id="section-27"></h3>
+<p>🔥 Advanced Features for CRUD Operations<br>
+✅ 1. Connect to a Database (MongoDB or MySQL)<br>
+• Instead of using an array, store courses in a MongoDB (Mongoose) or MySQL database.<br>
+• Example using MongoDB:</p>
+<p>const mongoose = require(‘mongoose’);<br>
+mongoose.connect(‘mongodb://localhost/coursesDB’, { useNewUrlParser: true, useUnifiedTopology: true });</p>
+<p>const courseSchema = new mongoose.Schema({<br>
+name: String<br>
+});<br>
+const Course = mongoose.model(‘Course’, courseSchema);</p>
+<h3 id="section-28"></h3>
+<p>✅ 2. Add Middleware for Authentication<br>
+• Protect endpoints so only authorized users can add, edit, or delete courses.<br>
+• Example using jsonwebtoken:<br>
+js</p>
+<p>const jwt = require(‘jsonwebtoken’);</p>
+<p>function auth(req, res, next) {<br>
+const token = req.header(‘x-auth-token’);<br>
+if (!token) return res.status(401).send(‘Access Denied.’);</p>
+<p>try {<br>
+const decoded = jwt.verify(token, ‘jwtPrivateKey’);<br>
+req.user = decoded;<br>
+next();<br>
+} catch (ex) {<br>
+res.status(400).send(‘Invalid token.’);<br>
+}<br>
+}<br>
+• Apply it to routes:<br>
+app.post(’/api/courses’, auth, (req, res) =&gt; { … });</p>
+<h3 id="section-29"></h3>
+<p>✅ 3. Implement Pagination<br>
+• Instead of sending all courses, return data in pages.<br>
+app.get(’/api/courses’, (req, res) =&gt; {<br>
+const page = parseInt(req.query.page) || 1;<br>
+const limit = parseInt(req.query.limit) || 10;<br>
+const startIndex = (page - 1) * limit;<br>
+const paginatedCourses = courses.slice(startIndex, startIndex + limit);<br>
+res.send(paginatedCourses);<br>
+});</p>
+<h3 id="section-30"></h3>
+<p>✅ 4. Implement Search and Filtering<br>
+• Allow users to search courses by name.<br>
+app.get(’/api/courses’, (req, res) =&gt; {<br>
+const search = <a href="http://req.query.name">req.query.name</a>;<br>
+if (search) {<br>
+const filtered = courses.filter(c =&gt; c.name.toLowerCase().includes(search.toLowerCase()));<br>
+res.send(filtered);<br>
+} else {<br>
+res.send(courses);<br>
+}<br>
+});</p>
+<h3 id="section-31"></h3>
+<p>✅ 5. Use async/await for Database Calls<br>
+• If using MongoDB, make requests asynchronous.<br>
+app.post(’/api/courses’, async (req, res) =&gt; {<br>
+let course = new Course({ name: <a href="http://req.body.name">req.body.name</a> });<br>
+course = await course.save();<br>
+res.send(course);<br>
+});</p>
+<h3 id="section-32"></h3>
+<p>✅ 6. Use Express Router for Modular Code<br>
+• Instead of defining all routes in one file, break them into separate files.<br>
+✅ Create routes/courses.js:<br>
+const express = require(‘express’);<br>
+const router = express.Router();</p>
+<p>router.get(’/’, (req, res) =&gt; { … });<br>
+router.post(’/’, (req, res) =&gt; { … });</p>
+<p>module.exports = router;<br>
+✅ In server.js:<br>
+const courses = require(’./routes/courses’);<br>
+app.use(’/api/courses’, courses);</p>
+<p>Middleware in Expres.js<br>
+Middleware in Express.js is a function that is executed between the request and the response.<br>
+It has access to the request object (req), the response object (res), and the next middleware function<br>
+in the application’s request-response cycle. They sit between the incoming request and the final response and allow you to perform operations like request processing, authentication, data validation, or even error handling.<br>
+Middleware in Express.js refers to functions that execute during the lifecycle of an HTTP request. They sit between the incoming request and the final response and allow you to perform operations like request processing, authentication, data validation, or even error handling.</p>
+<h3 id="types-of-middleware-in-express.js">Types of Middleware in Express.js</h3>
+<ol>
+<li>Application-Level Middleware: Defined at the app level and commonly used for logging, authentication, or parsing request bodies.<br>
+const express = require(‘express’);<br>
+const app = express();<br>
+// Application-level middleware<br>
+app.use((req, res, next) =&gt; {<br>
+console.log(<code>${req.method} request made to ${req.url}</code>);<br>
+next(); // Pass control to the next middleware<br>
+});<br>
+app.get(’/’, (req, res) =&gt; {<br>
+res.send(‘Hello, World!’);<br>
+});<br>
+app.listen(3000, () =&gt; console.log(‘Server running on port 3000’));<pre><code>
+</code></pre>
+</li>
+<li>Router-Level Middleware: Works on specific routes. These are defined using <code>Router()</code>.<br>
+const router = express.Router();<br>
+// Router-level middleware<br>
+router.use((req, res, next) =&gt; {<br>
+console.log(‘Middleware for this router’);<br>
+next();<br>
+});<br>
+router.get(’/about’, (req, res) =&gt; {<br>
+res.send(‘About Page’);<br>
+});<br>
+app.use(router); // Attach router to the app<pre><code>
+</code></pre>
+</li>
+<li>Built-in Middleware: Predefined middleware functions provided by Express.js.
+<ul>
+<li><code>express.json()</code>: Parses incoming JSON requests.</li>
+<li><code>express.urlencoded()</code>: Parses URL-encoded payloads.<br>
+app.use(express.json());<br>
+app.post(’/data’, (req, res) =&gt; {<br>
+res.send(req.body); // Access parsed JSON data<br>
+});</li>
+</ul>
+</li>
+</ol>
+<p>Middleware for Authentication<br>
+In Node.js, a middleware function is like a middleman that processes requests between the client and server. Middleware is used to handle tasks like logging, authentication, data parsing, error handling, etc. Middleware functions can modify the request (<code>req</code>) and response (<code>res</code>) objects or terminate the request-response cycle.</p>
+<h3 id="real-world-example-authentication-middleware">Real-World Example: Authentication Middleware</h3>
+<p>Let’s say we’re building an e-commerce website. Before allowing users to view their order history, you want to check if the user is logged in (authenticated). Here’s how middleware can help:</p>
+<h4 id="middleware-function-for-authentication">1. Middleware Function for Authentication</h4>
+<p>Create a middleware function to check authentication:<br>
+// Middleware to check if the user is authenticated<br>
+function isAuthenticated(req, res, next) {<br>
+if (req.user &amp;&amp; req.user.isLoggedIn) { // Assuming <code>req.user</code> has user info<br>
+next(); // User is authenticated, move to the next middleware or route<br>
+} else {<br>
+res.status(401).send(‘You must log in to access this resource.’); // Unauthorized<br>
+}<br>
+}</p>
+<h4 id="use-the-middleware-in-an-application">2. Use the Middleware in an Application</h4>
+<p>Apply the middleware to protect specific routes (e.g., <code>/orders</code>):<br>
+const express = require(‘express’);<br>
+const app = express();<br>
+// Simulated user data for demonstration<br>
+app.use((req, res, next) =&gt; {<br>
+req.user = { isLoggedIn: true }; // Simulated logged-in user<br>
+next();<br>
+});<br>
+// Apply the middleware to the <code>/orders</code> route<br>
+app.get(’/orders’, isAuthenticated, (req, res) =&gt; {<br>
+res.send(‘Here is your order history!’);<br>
+});<br>
+// Start the server<br>
+app.listen(3000, () =&gt; {<br>
+console.log(‘Server is running on <a href="http://localhost:3000">http://localhost:3000</a>’);<br>
+});</p>
+<h4 id="how-it-works">3. How It Works</h4>
+<ul>
+<li>When a user visits <code>/orders</code>, the <code>isAuthenticated</code> middleware runs <em>before</em> the route handler.</li>
+<li>If the user is authenticated (<code>req.user.isLoggedIn</code> is <code>true</code>), the <code>next()</code> function allows the request to proceed to the route handler.</li>
+<li>If not, the middleware stops the request-response cycle and sends a <code>401 Unauthorized</code> response.</li>
+</ul>
+<p>Let’s create middleware to verify if a user is authenticated before accessing certain routes.<br>
+const express = require(‘express’);<br>
+const app = express();<br>
+// Sample middleware for authentication<br>
+function authenticateUser(req, res, next) {<br>
+const token = req.headers[‘authorization’]; // Check for a token in the request headers<br>
+/*<br>
+The token in your code represents a piece of information, usually a string, that is used to verify the identity or authenticity of a user. Tokens are a common method for securing communication between a client (like a web browser or mobile app) and a server.<br>
+In this specific example:<br>
+The token is expected to be included in the request headers, under the authorization field.<br>
+It is compared against a predefined value (my-secret-token in this case) to determine if the user is allowed to access the requested resource or endpoint.</p>
+<p>*/<br>
+if (token === ‘my-secret-token’) {<br>
+console.log(‘User authenticated successfully’);<br>
+next(); // Pass control to the next middleware or route handler<br>
+} else {<br>
+res.status(401).send(‘Unauthorized: Invalid token’);<br>
+}<br>
+}<br>
+// Public route (no authentication needed)<br>
+app.get(’/public’, (req, res) =&gt; {<br>
+res.send(‘This is a public route.’);<br>
+});<br>
+// Protected route (requires authentication)<br>
+app.get(’/protected’, authenticateUser, (req, res) =&gt; {<br>
+res.send(‘This is a protected route. You are authenticated!’);<br>
+});<br>
+// Start the server<br>
+app.listen(3000, () =&gt; {<br>
+console.log(‘Server is running on port 3000’);<br>
+});</p>
+<p>How It Works:<br>
+Middleware Function (authenticateUser): Checks the authorization header for a token. If the token is valid (e.g., ‘my-secret-token’), it calls next() to proceed to the next middleware or route handler. If the token is invalid or missing, it sends a 401 Unauthorized response to the client.<br>
+Routes:<br>
+/public: Can be accessed by anyone without authentication.<br>
+/protected: Uses the middleware to ensure only authenticated users can access it.<br>
+Testing It Out:<br>
+Send a request to /public: You’ll receive “This is a public route.”<br>
+Send a request to /protected:<br>
+If you include the header Authorization: my-secret-token, you’ll get “This is a protected route. You are authenticated!”<br>
+Check result with Postman:</p>
+<ol>
+<li>Open Postman and create a GET request.</li>
+<li>Enter the URL <a href="http://localhost:3000/protected">http://localhost:3000/protected</a>.</li>
+<li>In the “Headers” tab, add:<br>
+o Key: Authorization<br>
+o Value: my-secret-token<br>
+If you omit the header or use an invalid token, you’ll get “Unauthorized: Invalid token.”<br>
+In the provided code snippet, the middleware function is defined using the <code>app.use()</code> method.<br>
+The <code>express.json()</code> middleware is used to parse incoming requests with JSON payloads. This middleware is added to the middleware stack, and it will be executed for every incoming request.<br>
+The middleware function in the <code>app.get('/', (req, res) =&gt; {...})</code> route does not have access to the<br>
+next middleware function. It simply sends a response with the text “Hello World” when a GET request is<br>
+made to the root ("/") route.<br>
+The middleware function in the <code>app.get('/api/courses', (req, res) =&gt; {...})</code> route also does not have<br>
+access to the next middleware function. It sends a response with the JSON representation of the<br>
+<code>courses</code> array when a GET request is made to the “/api/courses” route.<br>
+In summary, middleware in Express.js is a powerful feature that allows developers to add custom<br>
+functionality to the request-response cycle. It can be used for various purposes, such as<br>
+authentication, logging, error handling, and more. In the provided code snippet, the <code>express.json()</code><br>
+middleware is used to parse incoming JSON payloads.<br>
+*/<br>
+const express = require(‘express’ );<br>
+const logger = require(’./logger’);<br>
+const app = express();<br>
+app.use(express.json());//returns a middleware function set req.body<br>
+app.use(express.urlencoded());<br>
+app.use(express.static(‘public’));<br>
+app.use(logger);</li>
+</ol>
+<p>app.use(function(req, res, next){<br>
+console.log(‘Authenticating…’);<br>
+next(); // pass control to the next middleware or<br>
+});</p>
+<p>const courses = [<br>
+{ id: 1, name: ‘course1’ },<br>
+{ id: 2, name: ‘course2’ },<br>
+{ id: 3, name: ‘course3’ },<br>
+]<br>
+app.get(’/’, (req, res) =&gt; {<br>
+res. send(‘Hello World’);<br>
+});<br>
+app.get(’/api/courses’, (req, res) =&gt; {<br>
+res.send(courses);<br>
+});</p>
+<p>Static Content in NodeJS<br>
+Static content refers to files like images, CSS stylesheets, JavaScript scripts, HTML files, and other resources that don’t change dynamically when served to users. These files are directly sent to the browser as they are.<br>
+How It Works Here</p>
+<ol>
+<li>express.static() Functionality:<br>
+o This middleware is used to serve static files from a directory on the server.<br>
+o The ‘public’ argument specifies that the public folder in your project directory will hold static assets.</li>
+<li>Example Behavior:<br>
+o If your public folder has a file like logo.png, it can be accessed in the browser via <a href="http://localhost:3000/logo.png">http://localhost:3000/logo.png</a>.<br>
+o Similarly, if you have an index.html file inside the public directory, navigating to <a href="http://localhost:3000/index.html">http://localhost:3000/index.html</a> will serve that file.</li>
+<li>Benefits of Static Content:<br>
+o Reduces server load for frequently requested files since they don’t require processing logic.<br>
+o Improves the user’s experience by enabling faster loading times.</li>
+<li>const helmet = require(‘helmet’); // Importing Helmet middleware to secure HTTP headers.</li>
+<li>const morgan = require(‘morgan’); // Importing Morgan middleware for HTTP request logging.</li>
+<li>const express = require(‘express’); // Importing the Express library to create the application.</li>
+<li>const logger = require(’./logger’); // Importing a custom middleware module (logger.js).</li>
+<li></li>
+<li>const app = express(); // Initializing an Express application instance.</li>
+<li>app.use(express.json()); // Middleware to parse incoming JSON request bodies into <code>req.body</code>.</li>
+<li>app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded data (for forms) into <code>req.body</code>.</li>
+<li>app.use(express.static(‘public’)); // Middleware to serve static files from the ‘public’ directory.</li>
+<li>app.use(helmet()); // Applying Helmet middleware for better security by setting HTTP headers.</li>
+<li>app.use(morgan(‘tiny’)); // Using Morgan middleware with the ‘tiny’ format for concise request logging.</li>
+<li></li>
+<li>app.use(logger); // Using the custom <code>logger</code> middleware for logging additional request information.</li>
+<li></li>
+<li>app.use(function(req, res, next) {</li>
+<li>console.log(‘Authenticating…’); // Custom middleware to log an “Authenticating…” message.</li>
+<li>next(); // Passing control to the next middleware in the stack.</li>
+<li>});</li>
+<li></li>
+<li>const courses = [ // Array representing a list of courses with unique IDs and names.</li>
+<li>{ id: 1, name: ‘course1’ }, // Course with ID 1 and name ‘course1’.</li>
+<li>{ id: 2, name: ‘course2’ }, // Course with ID 2 and name ‘course2’.</li>
+<li>{ id: 3, name: ‘course3’ } // Course with ID 3 and name ‘course3’.</li>
+<li>];</li>
+<li></li>
+<li>app.get(’/’, (req, res) =&gt; {</li>
+<li>res.send(‘Hello World’); // Route handler for the root path (’/’) that sends “Hello World”.</li>
+<li>});</li>
+<li></li>
+<li>app.get(’/api/courses’, (req, res) =&gt; {</li>
+<li>res.send(courses); // Route handler for ‘/api/courses’ path that sends the <code>courses</code> array as the response.</li>
+<li>});</li>
+<li></li>
+<li>const port = process.env.PORT || 3000; // Setting the application port from environment variables or defaulting to 3000.</li>
+<li>app.listen(port, () =&gt; console.log(<code>Listening on port ${port}...</code>)); // Starting the server and logging the port it’s running on.</li>
+<li></li>
+</ol>
+<p>Environment variable:<br>
+const config = require(‘config’);<br>
+const helmet = require(‘helmet’);<br>
+const morgan = require(‘morgan’);<br>
+const express = require(‘express’ );<br>
+const app = express();</p>
+<p>// console.log(<code>NODE_ENV: ${process.env.NODE_ENV}</code>);<br>
+// console.log(<code>app: ${app.get('env')}</code>);<br>
+console.log(<code>Mail server: ${config.get('mail.host')}</code>);<br>
+console.log(<code>Mail password: ${config.get('mail.password')}</code>);</p>
+<p>app.use(express.json());//returns a middleware function set req.body<br>
+app.use(express.urlencoded({extended:true}));<br>
+app.use(express.static(‘public’));<br>
+app.use(helmet());<br>
+app.use(morgan(‘tiny’));</p>
+<p>//Configuration<br>
+console.log("Application name: " + config.get(‘name’));<br>
+console.log("Mail server: " + config.get(‘mail.host’));<br>
+console.log("Mail Password: " + config.get(‘mail.password’));</p>
+<p>if(app.get(‘env’) === ‘development’){<br>
+app.use(morgan(‘dev’)); // logging in development mode<br>
+console.log(‘Morgan Enabled…’);<br>
+}</p>
+<p>app.use(function(req, res, next){<br>
+console.log(‘Authenticating…’);<br>
+next(); // pass control to the next middleware or<br>
+});<br>
+const port = process.env.PORT || 3000;<br>
+app.listen(port, () =&gt; console.log(<code>You can do It Mikat\nListening on port ${port}...</code>));</p>
+<p>/_/Web Code/NodeJs/<br>
+│-- node_modules/<br>
+│-- config/<br>
+│ │-- default.json{<br>
+“name”: “My Express Application”<br>
+}<br>
+│ │-- development.json {<br>
+“name”: “My Express Application- Development”,<br>
+“mail”:{<br>
+“host”: “dev-mail-server”<br>
+}<br>
+}<br>
+│ │-- custom-environment-variables.json {<br>
+“mail”:{<br>
+“password”:“APP_PASSWORD”<br>
+}<br>
+}<br>
+│-- index.js<br>
+│-- package.json<br>
+_/</p>
+<h3 id="environment-variables-in-node.js-🌍">Environment Variables in Node.js 🌍</h3>
+<p>In Node.js, environment variables are used to store configuration settings that vary based on different environments (development, production, testing, etc.). They help keep sensitive data (like API keys, database credentials, passwords) separate from the code.</p>
+<h3 id="where-do-we-use-environment-variables-🚀">Where Do We Use Environment Variables? 🚀</h3>
+<p>✅ Hiding Sensitive Data (e.g., passwords, API keys)<br>
+✅ Setting Different Configurations for different environments<br>
+✅ Making Applications More Flexible by avoiding hardcoded values</p>
+<h3 id="how-config-works-in-this-code-🛠️">How <code>config</code> Works in This Code? 🛠️</h3>
+<p>The code uses the <code>config</code> package to manage environment-specific configurations. It loads settings from JSON configuration files inside the <code>/config/</code> directory.</p>
+<h4 id="folder-structure-in-this-code">Folder Structure in This Code</h4>
+<p>/Web Code/NodeJs/<br>
+│-- node_modules/<br>
+│-- config/<br>
+│ │-- default.json # Default settings<br>
+│ │-- development.json # Dev-specific settings<br>
+│ │-- custom-environment-variables.json # Maps env variables<br>
+│-- index.js<br>
+│-- package.json</p>
+<p>🔹 default.json (Default settings)<br>
+json<br>
+{<br>
+“name”: “My Express Application”<br>
+}</p>
+<p>🔹 development.json (Settings for development mode)<br>
+json<br>
+{<br>
+“name”: “My Express Application- Development”,<br>
+“mail”: {<br>
+“host”: “dev-mail-server”<br>
+}<br>
+}</p>
+<p>🔹 custom-environment-variables.json (Maps <code>mail.password</code> to <code>APP_PASSWORD</code>)<br>
+json<br>
+{<br>
+“mail”: {<br>
+“password”: “APP_PASSWORD”<br>
+}<br>
+}</p>
+<h3 id="how-does-environment-configuration-work-🤔">How Does Environment Configuration Work? 🤔</h3>
+<p>When the app starts, <code>config.get('mail.password')</code> checks custom-environment-variables.json, which maps <code>mail.password</code> to the <code>APP_PASSWORD</code> environment variable.</p>
+<ul>
+<li>If <code>APP_PASSWORD</code> is set in the system, it is used.</li>
+<li>If not, an error occurs because <code>mail.password</code> is missing.</li>
+</ul>
+<h3 id="how-to-run-the-code-and-see-the-output-🏃‍♂️">How to Run the Code and See the Output? 🏃‍♂️</h3>
+<p>1️⃣ Set the environment variable in the terminal:</p>
+<p>set APP_PASSWORD=mySecretPassword # Windows (cmd)</p>
+<p>2️⃣ Run the server</p>
+<p>node index.js</p>
+<p>3️⃣ Check the Output in the Terminal</p>
+<p>Mail server: dev-mail-server<br>
+Mail password: mySecretPassword<br>
+Application name: My Express Application- Development<br>
+Morgan Enabled…<br>
+Authenticating…<br>
+Listening on port 3000…</p>
+<h3 id="how-node_env-affects-behavior-🌱">How <code>NODE_ENV</code> Affects Behavior? 🌱</h3>
+<p><code>NODE_ENV</code> defines the running environment (<code>development</code>, <code>production</code>, etc.). You can set it before running the app:</p>
+<p>export NODE_ENV=development # Linux/macOS<br>
+set NODE_ENV=development # Windows (cmd)<br>
+$env:NODE_ENV=“development” # Windows (PowerShell)</p>
+<ul>
+<li>If <code>NODE_ENV=development</code>, <code>development.json</code> settings are loaded.</li>
+<li>If not set, <code>default.json</code> is used.</li>
+<li>The <code>morgan('dev')</code> logger is enabled only in development mode.</li>
+</ul>
+<p>Environment variables in Node.js are used to store configuration settings, such as API keys, database connection strings, or other sensitive information that you don’t want to hard-code into your application. Here’s a quick guide to understanding and using them:</p>
+<h3 id="accessing-environment-variables">1. Accessing Environment Variables</h3>
+<p>Node.js provides the <code>process.env</code> object to access environment variables. For example:<br>
+console.log(process.env.MY_VARIABLE);</p>
+<h3 id="setting-environment-variables">2. Setting Environment Variables</h3>
+<p>You can set environment variables in different ways:</p>
+<ul>
+<li>Directly in the terminal (temporary):<br>
+bash<br>
+MY_VARIABLE=value node app.js</li>
+<li>Using a <code>.env</code> file:<br>
+Create a <code>.env</code> file in your project root and add variables:<br>
+MY_VARIABLE=value</li>
+</ul>
+<h3 id="using-a-library-like-dotenv">3. Using a Library like <code>dotenv</code></h3>
+<p>For managing environment variables in a <code>.env</code> file, you can use the <code>dotenv</code> package:</p>
+<ol>
+<li>Install <code>dotenv</code>:<br>
+bash<br>
+npm install dotenv</li>
+<li>Require it in your application:<br>
+require(‘dotenv’).config();<br>
+console.log(process.env.MY_VARIABLE);</li>
+</ol>
+<h3 id="best-practices">4. Best Practices</h3>
+<ul>
+<li>Don’t commit sensitive data: Add <code>.env</code> to your <code>.gitignore</code> file.</li>
+<li>Use default values: Provide fallback values for missing variables:<br>
+const port = process.env.PORT || 3000;</li>
+<li>Configuration files: Consider organizing variables by environments (e.g., development, production).</li>
+</ul>
+<p>Debugging:<br>
+const startupDebugger = require(‘debug’)(‘app:startup’);<br>
+const dbDebugger = require(‘debug’)(‘app:db’);<br>
+const morgan = require(‘morgan’);<br>
+const express = require(‘express’ );<br>
+const app = express();</p>
+<p>if(app.get(‘env’) === ‘development’){<br>
+app.use(morgan(‘dev’)); // logging in development mode<br>
+startupDebugger(‘Morgan Enabled…’);<br>
+}</p>
+<p>//db work<br>
+dbDebugger(‘Connected to the database…’);</p>
+<p>const port = process.env.PORT || 3000;<br>
+app.listen(port, () =&gt; console.log(You can do It Mikat\nListening on port ${port}…));</p>
+<h2 id="results">Results</h2>
+<p>/E:\Web Code\NodeJs&gt;set DEBUG=app:startup</p>
+<p>E:\Web Code\NodeJs&gt;nodemon indx.js<br>
+[nodemon] 3.1.9<br>
+[nodemon] to restart at any time, enter rs<br>
+[nodemon] watching path(s): .<br>
+[nodemon] watching extensions: js,mjs,cjs,json<br>
+[nodemon] starting node indx.js index.js<br>
+app:startup Morgan Enabled… +0ms<br>
+You can do It Mikat<br>
+Listening on port 3000…<br>
+^C<br>
+E:\Web Code\NodeJs&gt;set DEBUG=app:</p>
+<p>E:\Web Code\NodeJs&gt;nodemon index.js<br>
+[nodemon] 3.1.9<br>
+[nodemon] to restart at any time, enter rs<br>
+[nodemon] watching path(s): .<br>
+[nodemon] watching extensions: js,mjs,cjs,json<br>
+[nodemon] starting node index.js<br>
+app:startup Morgan Enabled… +0ms<br>
+app:db Connected to the database… +0ms<br>
+You can do It Mikat<br>
+Listening on port 3000… /</p>
+<hr>
+<h2 id="debugging-in-node.js-🕵️‍♂️">Debugging in Node.js 🕵️‍♂️</h2>
+<p>Debugging helps developers identify and fix errors in their code by tracking program execution, logging useful messages, and analyzing issues. Node.js provides several ways to debug, including:</p>
+<ul>
+<li>Console Logging (console.log) – Basic debugging</li>
+<li>Debugger (node --inspect) – Interactive debugging</li>
+<li>Debug Library (debug package) – Controlled debugging</li>
+<li>Integrated Debugging (VS Code, Chrome DevTools, etc.)</li>
+</ul>
+<hr>
+<h2 id="how-debugging-works-in-the-given-code-🧐">How Debugging Works in the Given Code? 🧐</h2>
+<h3 id="️⃣-using-the-debug-library">1️⃣ Using the debug Library</h3>
+<p>The debug package is used to enable or disable debugging messages dynamically instead of always printing logs to the console.</p>
+<h3 id="️⃣-setting-up-debugging-in-the-code">2️⃣ Setting Up Debugging in the Code</h3>
+<p>js<br>
+const startupDebugger = require(‘debug’)(‘app:startup’);<br>
+const dbDebugger = require(‘debug’)(‘app:db’);<br>
+const morgan = require(‘morgan’);<br>
+const express = require(‘express’);<br>
+const app = express();</p>
+<ul>
+<li>startupDebugger → Used for logging startup-related messages</li>
+<li>dbDebugger → Used for logging database-related messages</li>
+</ul>
+<h3 id="️⃣-conditional-debugging-based-on-environment">3️⃣ Conditional Debugging Based on Environment</h3>
+<p>js<br>
+if (app.get(‘env’) === ‘development’) {<br>
+app.use(morgan(‘dev’)); // Logging HTTP requests<br>
+startupDebugger(‘Morgan Enabled…’);<br>
+}</p>
+<ul>
+<li>If the app runs in development mode, it enables morgan (for request logging) and logs “Morgan Enabled…” using startupDebugger.</li>
+<li>This log only appears if debugging for app:startup is enabled.</li>
+</ul>
+<h3 id="️⃣-debugging-database-operations">4️⃣ Debugging Database Operations</h3>
+<p>js<br>
+dbDebugger(‘Connected to the database…’);</p>
+<ul>
+<li>This logs “Connected to the database…”, but it only appears if debugging for app:db is enabled.</li>
+</ul>
+<hr>
+<h2 id="how-to-run-debugging-in-the-terminal-💻">How to Run Debugging in the Terminal? 💻</h2>
+<p>By default, debug logs do not appear unless you enable them manually.</p>
+<h3 id="️⃣-enable-debugging-for-appstartup-only">1️⃣ Enable Debugging for app:startup Only</h3>
+<p>set DEBUG=app:startup # Windows<br>
+export DEBUG=app:startup # macOS/Linux<br>
+nodemon index.js</p>
+<p>🔹 Output:</p>
+<p>app:startup Morgan Enabled… +0ms<br>
+You can do It Mikat<br>
+Listening on port 3000…</p>
+<p>🔹 The “Connected to the database…” message is not shown because debugging for app:db is not enabled.</p>
+<h3 id="️⃣-enable-debugging-for-all-debuggers-app">2️⃣ Enable Debugging for All Debuggers (app:)</h3>
+<p>set DEBUG=app: # Windows<br>
+export DEBUG=app: # macOS/Linux<br>
+nodemon index.js</p>
+<p>🔹 Output:</p>
+<p>app:startup Morgan Enabled… +0ms<br>
+app:db Connected to the database… +0ms<br>
+You can do It Mikat<br>
+Listening on port 3000…</p>
+<p>🔹 Now, both “Morgan Enabled…” and “Connected to the database…” are shown.</p>
+<hr>
+<h2 id="where-do-we-use-debugging-in-development-🛠️">Where Do We Use Debugging in Development? 🛠️</h2>
+<p>Debugging is essential in various parts of development:</p>
+<p>✅ Application Startup (app:startup) → Ensuring configurations load correctly<br>
+✅ Database Connection (app:db) → Checking if the app connects to the database<br>
+✅ Request Handling → Debugging API request flow<br>
+✅ Authentication &amp; Security → Debugging login &amp; token generation<br>
+✅ Performance Monitoring → Identifying slow routes or operations</p>
+<hr>
+<h2 id="why-use-debug-instead-of-console.log-🤔">Why Use debug Instead of console.log? 🤔</h2>
+
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>console.log</th>
+<th>debug Library</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Performance</td>
+<td>Always prints (can slow the app)</td>
+<td>Prints only if enabled</td>
+</tr>
+<tr>
+<td>Selective Logs</td>
+<td>No (prints everything)</td>
+<td>Yes (filter by namespace)</td>
+</tr>
+<tr>
+<td>Production Ready?</td>
+<td>❌ No (not recommended)</td>
+<td>✅ Yes (used in real-world apps)</td>
+</tr>
+<tr>
+<td>Log Management</td>
+<td>Hard to manage</td>
+<td>Organized using namespaces</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="want-more-advanced-debugging-🚀">Want More Advanced Debugging? 🚀</h2>
+<p>🔹 Use the Node.js Debugger</p>
+<p>node --inspect index.js</p>
+<p>🔹 Use Chrome DevTools for debugging</p>
+<ol>
+<li>
+<p>Run:</p>
+<p>node --inspect-brk index.js</p>
+</li>
+<li>
+<p>Open Chrome, go to chrome://inspect, and attach the debugger.</p>
+</li>
+</ol>
+<p>🔹 Use VS Code Debugging (Set breakpoints inside the editor)</p>
+<p>Template Engine:<br>
+A template engine in Node.js is used to dynamically generate HTML by combining static templates with data. It enables you to create dynamic web pages efficiently by separating the HTML structure from the dynamic content. Some popular template engines are Pug (formerly Jade), EJS, and Handlebars.</p>
+<h3 id="example-using-pug">Example Using Pug</h3>
+<p>Here’s how you can use the Pug template engine in a Node.js application:</p>
+<h4 id="setup">1. Setup</h4>
+<p>First, install the required packages:<br>
+bash<br>
+npm install express pug</p>
+<h4 id="integrate-pug-with-express">2. Integrate Pug with Express</h4>
+<p>Here’s a basic Express app using Pug:<br>
+javascript<br>
+const express = require(‘express’);<br>
+const app = express();</p>
+<p>// Set Pug as the template engine<br>
+app.set(‘view engine’, ‘pug’);<br>
+app.set(‘views’, ‘./views’); // Define the directory for Pug templates</p>
+<p>// A sample route<br>
+app.get(’/’, (req, res) =&gt; {<br>
+res.render(‘index’, { title: ‘Hello World’, message: ‘Welcome to Pug!’ });<br>
+});</p>
+<p>// Start the server<br>
+app.listen(3000, () =&gt; {<br>
+console.log(‘Server is running on <a href="http://localhost:3000">http://localhost:3000</a>’);<br>
+});</p>
+<h4 id="create-a-pug-template">3. Create a Pug Template</h4>
+<p>Create a views folder in your project directory and add a file named index.pug with the following content:<br>
+pug<br>
+doctype html<br>
+html<br>
+head<br>
+title= title<br>
+body<br>
+h1= message</p>
+<h4 id="result">4. Result</h4>
+<p>When you visit <a href="http://localhost:3000">http://localhost:3000</a>, the Pug template will render HTML with the dynamic title and message provided in the res.render call.</p>
+<h3 id="advantages-of-using-a-template-engine">Advantages of Using a Template Engine</h3>
+<ul>
+<li>Separation of concerns: It separates the HTML structure from the application logic.</li>
+<li>Dynamic content: You can easily inject dynamic data into templates.</li>
+<li>Reusable components: Create reusable templates or partials for headers, footers, etc.</li>
+</ul>
+</div>
+</body>
+
+</html>

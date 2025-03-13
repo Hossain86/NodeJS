@@ -1,6 +1,9 @@
 {
   "name": "My Express Application- Development",
-  "mail":{
-    "host": "dev-mail-server"
+  "mail": {
+    "host": "dev-mail-server",
+    "port": 587,
+    "user": "your-email@example.com",
+    "password": "your-secure-password"
   }
 }
